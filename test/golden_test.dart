@@ -1,11 +1,16 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:riverpod_countup/main.dart';
 import 'package:riverpod_countup/view_model.dart';
 
 void main() {
+  setUpAll(() async {
+    await loadAppFonts();
+  });
   testGoldens('nomal', (tester) async {
     const iPhone55 =
         Device(name: 'iPhone55', size: Size(414, 736), devicePixelRatio: 3.0);
@@ -20,6 +25,23 @@ void main() {
           viewModel,
         ),
       ),
+    );
+
+    await multiScreenGolden(
+      tester,
+      'myHomePage_0init',
+      devices: devices,
+    );
+
+    await tester.tap(find.byIcon(CupertinoIcons.plus));
+    await tester.tap(find.byIcon(CupertinoIcons.plus));
+    await tester.tap(find.byIcon(CupertinoIcons.minus));
+    await tester.pump();
+
+    await multiScreenGolden(
+      tester,
+      'myHomePage_1tapped',
+      devices: devices,
     );
   });
 }
