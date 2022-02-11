@@ -20,7 +20,7 @@ class SoundLogic {
     );
   }
 
-  void valueChange(CountData oldData, CountData newData) {
+  void valueChanged(CountData oldData, CountData newData) {
     if (newData.countUp == 0 && newData.countDown == 0 && newData.count == 0) {
       playResetSound();
     } else if (oldData.countUp + 1 == newData.countUp) {
