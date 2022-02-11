@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_countup/data/count_data.dart';
 import 'package:riverpod_countup/logic/logic.dart';
 import 'package:riverpod_countup/provider.dart';
 
@@ -25,22 +26,25 @@ class ViewModel {
 
   void onIncrease() {
     _logic.increase();
-
-    _ref.watch(countDataProvider.state).state = _logic.countData;
-    _soundLogic.playUpSound();
+    update();
   }
 
   void onDecrease() {
     _logic.decrease();
-
-    _ref.watch(countDataProvider.state).state = _logic.countData;
-    _soundLogic.playDownSound();
+    update();
   }
 
   void onReset() {
     _logic.reset();
+    update();
+  }
 
+  void update() {
+    CountData oldValue = _ref.watch(countDataProvider.state).state;
     _ref.watch(countDataProvider.state).state = _logic.countData;
+    CountData newValue = _ref.watch(countDataProvider.state).state;
+
     _soundLogic.playResetSound();
+    _soundLogic.valueChanged(oldValue, newValue);
   }
 }
