@@ -1,4 +1,4 @@
-import 'package:riverpod_countup/logic.dart';
+import 'package:riverpod_countup/logic/logic.dart';
 import 'package:test/test.dart';
 
 void main() {
