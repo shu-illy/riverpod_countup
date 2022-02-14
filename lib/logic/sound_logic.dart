@@ -1,7 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/count_data_changed_notifier.dart';
 
-class SoundLogic {
+class SoundLogic with CountDataChangedNotifier {
   static const SOUND_DATA_UP = 'sounds/se3.mp3';
   static const SOUND_DATA_DOWN = 'sounds/se1.mp3';
   static const SOUND_DATA_RESET = 'sounds/se2.mp3';
@@ -20,6 +21,7 @@ class SoundLogic {
     );
   }
 
+  @override
   void valueChanged(CountData oldData, CountData newData) {
     if (newData.countUp == 0 && newData.countDown == 0 && newData.count == 0) {
       playResetSound();

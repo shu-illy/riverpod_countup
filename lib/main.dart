@@ -84,7 +84,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,
                   tooltip: 'Increment',
-                  child: const Icon(CupertinoIcons.minus),
+                  child: ScaleTransition(
+                    child: const Icon(CupertinoIcons.minus),
+                    scale: _viewModel.animationMinus,
+                  ),
                 ),
               ],
             ),
@@ -101,7 +104,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
       floatingActionButton: FloatingActionButton(
         onPressed: _viewModel.onReset,
         tooltip: 'Increment',
-        child: const Icon(Icons.refresh),
+        child: ScaleTransition(
+          child: const Icon(CupertinoIcons.refresh),
+          scale: _viewModel.animationReset,
+        ),
       ),
     );
   }

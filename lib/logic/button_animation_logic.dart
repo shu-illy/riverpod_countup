@@ -1,8 +1,8 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/count_data_changed_notifier.dart';
 
-class ButtonAnimationLogic {
+class ButtonAnimationLogic with CountDataChangedNotifier {
   late AnimationController _animationController;
   late Animation<double> _animationScale;
 
@@ -30,8 +30,9 @@ class ButtonAnimationLogic {
         );
   }
 
+  @override
   void valueChanged(CountData oldData, CountData newData) {
-    if (oldData.countDown + 1 != newData.countDown) {
+    if (oldData.countUp + 1 != newData.countUp) {
       return;
     }
     start();
