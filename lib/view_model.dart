@@ -22,9 +22,17 @@ class ViewModel {
 
   void setRef(WidgetRef ref, TickerProvider tickerProvider) {
     _ref = ref;
-    _buttonAnimationLogicPlus = ButtonAnimationLogic(tickerProvider);
-    _buttonAnimationLogicMinus = ButtonAnimationLogic(tickerProvider);
-    _buttonAnimationLogicReset = ButtonAnimationLogic(tickerProvider);
+
+    conditionPlus(CountData oldValue, CountData newValue) {
+      return oldValue.countUp + 1 == newValue.countUp;
+    }
+
+    _buttonAnimationLogicPlus =
+        ButtonAnimationLogic(tickerProvider, conditionPlus);
+    _buttonAnimationLogicMinus =
+        ButtonAnimationLogic(tickerProvider, conditionPlus);
+    _buttonAnimationLogicReset =
+        ButtonAnimationLogic(tickerProvider, conditionPlus);
     _soundLogic.load();
 
     notifiers = [
