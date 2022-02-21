@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_countup/data/count_data.dart';
+import 'package:riverpod_countup/logic/button_animation_logic.dart';
 import 'package:riverpod_countup/provider.dart';
 import 'package:riverpod_countup/view_model.dart';
 
@@ -75,20 +76,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
               children: [
                 FloatingActionButton(
                   onPressed: _viewModel.onIncrease,
-                  child: RotationTransition(
-                    turns: _viewModel.animationPlusRotation,
-                    child: ScaleTransition(
-                        scale: _viewModel.animationPlus,
-                        child: const Icon(CupertinoIcons.plus)),
+                  child: ButtonAnimation(
+                    animationCombination: _viewModel.animationPlusCombination,
+                    child: const Icon(CupertinoIcons.plus),
                   ),
                 ),
                 FloatingActionButton(
                   onPressed: _viewModel.onDecrease,
-                  child: ScaleTransition(
-                    child: RotationTransition(
-                        turns: _viewModel.animationMinusRotation,
-                        child: const Icon(CupertinoIcons.minus)),
-                    scale: _viewModel.animationMinus,
+                  child: ButtonAnimation(
+                    animationCombination: _viewModel.animationMinusCombination,
+                    child: const Icon(CupertinoIcons.minus),
                   ),
                 ),
               ],
@@ -105,11 +102,31 @@ class _MyHomePageState extends ConsumerState<MyHomePage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _viewModel.onReset,
-        child: ScaleTransition(
+        child: ButtonAnimation(
+          animationCombination: _viewModel.animationResetCombination,
           child: const Icon(CupertinoIcons.refresh),
-          scale: _viewModel.animationReset,
         ),
       ),
+    );
+  }
+}
+
+class ButtonAnimation extends StatelessWidget {
+  final AnimationCombination animationCombination;
+  final Widget child;
+
+  const ButtonAnimation(
+      {Key? key, required this.animationCombination, required this.child})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      child: RotationTransition(
+        turns: animationCombination.animationRotation,
+        child: child,
+      ),
+      scale: animationCombination.animationScale,
     );
   }
 }
