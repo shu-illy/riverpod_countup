@@ -11,8 +11,6 @@ class ButtonAnimationLogic with CountDataChangedNotifier {
 
   late AnimationCombination _animationCombination;
 
-  get animationScale => _animationScale;
-  get animationRotation => _animationRotation;
   get animationCombination => _animationCombination;
 
   ValueChangedCondition startCondition;
@@ -75,7 +73,4 @@ class AnimationCombination {
 
   AnimationCombination(
       {required this.animationScale, required this.animationRotation});
-
-  // get animationPlusScale => _buttonAnimationLogicPlus.animationScale;
-  // get animationPlusRotation => _buttonAnimationLogicPlus.animationRotation;
 }
